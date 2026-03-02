@@ -31,7 +31,8 @@ class MailService {
     }
     async sendActivationEmail(to:string, url:string,text:string) {
       try {
-          await this.transporter.sendMail({
+          console.log(`[mail] sending activation email to ${to}`);
+          const info = await this.transporter.sendMail({
               from: constants.SMTP_USER,
               to,
               subject: 'Accaunt activation code',
@@ -49,8 +50,10 @@ class MailService {
               <div>${url}</div>
               </div>
             `
-          })
+          });
+          console.log(`[mail] activation email sent to ${to}. messageId=${info.messageId}`);
       } catch (error) {
+        console.error(`[mail] activation email failed for ${to}`, error);
         return error
       }
         
