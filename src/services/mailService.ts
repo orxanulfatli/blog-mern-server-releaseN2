@@ -19,6 +19,7 @@ class MailService {
     constructor() {
         this.transporter = createTransport({
             host: SMTP_HOST,
+            port: Number(SMTP_PORT),
             tls: {
                 rejectUnauthorized: false,
             },
