@@ -9,6 +9,7 @@ import {
   generateRefreshToken,
 } from "../config/generateToken";
 import mailService from "../services/mailService";
+import brevoMailService from "../services/brevoMailService";
 import { validateEmail, validPhone } from "../middleware/valid";
 import { sendSms, smsOTP, smsVerify } from "../config/sendSMS";
 import { INewUser, IDecodedToken, IUserParams } from "../config/interface";
@@ -39,7 +40,8 @@ class AuthCtrl {
 
       const url = `${CLIENT_URL}/active/${activeToken}`;
       if (validateEmail(account)) {
-        await mailService.sendActivationEmail(account, url, "Verify your email address.");
+        // Primary sender: Brevo HTTP API. SMTP mailService is kept as legacy fallback option.
+        await brevoMailService.sendActivationEmail(account, url, "Verify your email address.");
         return res.json({
           success: true,
           message: "Success! Please check your email to activate you account.",
