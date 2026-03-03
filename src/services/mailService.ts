@@ -23,7 +23,7 @@ class MailService {
             tls: {
                 rejectUnauthorized: false,
             },
-            secure: false,
+            secure: true,
             auth: {
                 user: constants.SMTP_USER,
                 pass: constants.SMTP_PASSWORD
