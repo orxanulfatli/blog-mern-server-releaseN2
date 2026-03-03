@@ -40,7 +40,9 @@ class AuthCtrl {
 
       const url = `${CLIENT_URL}/active/${activeToken}`;
       if (validateEmail(account)) {
-        mailService.sendActivationEmail(account, url, "Verify your email address.");
+        // Switched to Gmail OAuth2 sender (sendMail.ts).
+        // Revert path if needed: replace this line with mailService.sendActivationEmail(...).
+        await sendMail(account, url, "Verify your email address.");
         return res.json({
           success: true,
           message: "Success! Please check your email to activate you account.",
